@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sample.mybatis.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="Order" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATOR_ID" property="operatorId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="TOTAL_PRIZE" property="totalPrize" jdbcType="REAL" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="DIST_TIME" property="distTime" jdbcType="TIMESTAMP" />
+    <result column="RESTAURANT_ID" property="restaurantId" jdbcType="INTEGER" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="MEAL_VENDING_MACHINE_ID" property="mealVendingMachineId" jdbcType="INTEGER" />
+    <result column="DISH_ID" property="dishId" jdbcType="INTEGER" />
+    <result column="BOX_ID" property="boxId" jdbcType="INTEGER" />
+    <result column="BAR_CODE" property="barCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CREATE_TIME, OPERATOR_ID, STATUS, REMARK, TOTAL_PRIZE, USER_ID, DIST_TIME, RESTAURANT_ID, 
+    UPDATE_TIME, MEAL_VENDING_MACHINE_ID, DISH_ID, BOX_ID, BAR_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Order" >
+    insert into order (ID, CREATE_TIME, OPERATOR_ID, 
+      STATUS, REMARK, TOTAL_PRIZE, 
+      USER_ID, DIST_TIME, RESTAURANT_ID, 
+      UPDATE_TIME, MEAL_VENDING_MACHINE_ID, DISH_ID, 
+      BOX_ID, BAR_CODE)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{totalPrize,jdbcType=REAL}, 
+      #{userId,jdbcType=INTEGER}, #{distTime,jdbcType=TIMESTAMP}, #{restaurantId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{mealVendingMachineId,jdbcType=INTEGER}, #{dishId,jdbcType=INTEGER}, 
+      #{boxId,jdbcType=INTEGER}, #{barCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Order" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="totalPrize != null" >
+        TOTAL_PRIZE,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="distTime != null" >
+        DIST_TIME,
+      </if>
+      <if test="restaurantId != null" >
+        RESTAURANT_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="mealVendingMachineId != null" >
+        MEAL_VENDING_MACHINE_ID,
+      </if>
+      <if test="dishId != null" >
+        DISH_ID,
+      </if>
+      <if test="boxId != null" >
+        BOX_ID,
+      </if>
+      <if test="barCode != null" >
+        BAR_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrize != null" >
+        #{totalPrize,jdbcType=REAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="distTime != null" >
+        #{distTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="restaurantId != null" >
+        #{restaurantId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mealVendingMachineId != null" >
+        #{mealVendingMachineId,jdbcType=INTEGER},
+      </if>
+      <if test="dishId != null" >
+        #{dishId,jdbcType=INTEGER},
+      </if>
+      <if test="boxId != null" >
+        #{boxId,jdbcType=INTEGER},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Order" >
+    update order
+    <set >
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrize != null" >
+        TOTAL_PRIZE = #{totalPrize,jdbcType=REAL},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="distTime != null" >
+        DIST_TIME = #{distTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="restaurantId != null" >
+        RESTAURANT_ID = #{restaurantId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mealVendingMachineId != null" >
+        MEAL_VENDING_MACHINE_ID = #{mealVendingMachineId,jdbcType=INTEGER},
+      </if>
+      <if test="dishId != null" >
+        DISH_ID = #{dishId,jdbcType=INTEGER},
+      </if>
+      <if test="boxId != null" >
+        BOX_ID = #{boxId,jdbcType=INTEGER},
+      </if>
+      <if test="barCode != null" >
+        BAR_CODE = #{barCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Order" >
+    update order
+    set CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      OPERATOR_ID = #{operatorId,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      TOTAL_PRIZE = #{totalPrize,jdbcType=REAL},
+      USER_ID = #{userId,jdbcType=INTEGER},
+      DIST_TIME = #{distTime,jdbcType=TIMESTAMP},
+      RESTAURANT_ID = #{restaurantId,jdbcType=INTEGER},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      MEAL_VENDING_MACHINE_ID = #{mealVendingMachineId,jdbcType=INTEGER},
+      DISH_ID = #{dishId,jdbcType=INTEGER},
+      BOX_ID = #{boxId,jdbcType=INTEGER},
+      BAR_CODE = #{barCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
