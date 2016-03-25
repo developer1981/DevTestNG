@@ -161,4 +161,10 @@
       CREDENTIALS = #{credentials,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where NAME = #{name,jdbcType=INTEGER}
+  </select>  
 </mapper>

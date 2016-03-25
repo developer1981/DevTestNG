@@ -1,17 +1,20 @@
 package sample.mybatis.mapper;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import sample.mybatis.domain.Restaurant;
 
-public interface RestaurantMapper {
-    int deleteByPrimaryKey(Integer id);
+@Component
+public class RestaurantMapper {
+	
 
-    int insert(Restaurant record);
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
 
-    int insertSelective(Restaurant record);
+    public Restaurant selectByPrimaryKey(Integer id){
+    	return sqlSessionTemplate.selectOne("sample.mybatis.mapper.RestaurantMapper.selectByPrimaryKey", id);
+    }
 
-    Restaurant selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Restaurant record);
-
-    int updateByPrimaryKey(Restaurant record);
 }

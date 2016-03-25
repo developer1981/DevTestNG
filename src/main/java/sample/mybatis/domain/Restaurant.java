@@ -92,4 +92,11 @@ public class Restaurant {
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Restaurant [id=" + id + ", name=" + name + ", address=" + address + ", enable=" + enable
+				+ ", description=" + description + ", closeTime=" + closeTime + ", openTime=" + openTime + ", tel="
+				+ tel + ", email=" + email + "]";
+	}
 }

@@ -185,4 +185,10 @@
       PARENT_ID = #{parentId,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByVendorId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dish
+    where VENDOR_ID = #{vendorId,jdbcType=INTEGER}
+  </select>
 </mapper>
