@@ -2,6 +2,8 @@ package sample.mybatis.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Dish {
     private Integer id;
 
@@ -22,7 +24,7 @@ public class Dish {
     private Date createTime;
 
     private Date publishedTime;
-
+    
     private Date updateTime;
 
     private Integer vendorId;
@@ -132,4 +134,12 @@ public class Dish {
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
+
+	@Override
+	public String toString() {
+		return "Dish [id=" + id + ", description=" + description + ", name=" + name + ", enable=" + enable + ", type="
+				+ type + ", picUrl=" + picUrl + ", price=" + price + ", discount=" + discount + ", createTime="
+				+ createTime + ", publishedTime=" + publishedTime + ", updateTime=" + updateTime + ", vendorId="
+				+ vendorId + ", parentId=" + parentId + "]";
+	}
 }

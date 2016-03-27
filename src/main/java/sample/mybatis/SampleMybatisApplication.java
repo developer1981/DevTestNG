@@ -18,14 +18,20 @@ package sample.mybatis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {
+		"sample.mybatis",
+		"sample.swagger"
+		
+})
 public class SampleMybatisApplication  {
 
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SampleMybatisApplication.class, args);
-
+		
 	}
 
 

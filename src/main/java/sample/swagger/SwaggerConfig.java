@@ -1,16 +1,33 @@
 package sample.swagger;
 
 import static com.google.common.base.Predicates.or;
+import static com.google.common.collect.Lists.newArrayList;
 import static springfox.documentation.builders.PathSelectors.regex;
 
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.fasterxml.classmate.TypeResolver;
+
+import springfox.documentation.builders.ParameterBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+
 
 /**
  * SwaggerConfig
@@ -25,6 +42,8 @@ public class SwaggerConfig {
      * 重写该方法需要 extends WebMvcConfigurerAdapter
      * 
      */
+	
+    
 //    @Override
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        registry.addResourceHandler("swagger-ui.html")
@@ -34,6 +53,7 @@ public class SwaggerConfig {
 //                .addResourceLocations("classpath:/META-INF/resources/webjars/");
 //    }
 
+	
     /**
      * 可以定义多个组，比如本类中定义把test和demo区分开了
      * （访问页面就可以看到效果了） 
@@ -41,20 +61,63 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket testApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("test")
-                .genericModelSubstitutes(DeferredResult.class)
-//                .genericModelSubstitutes(ResponseEntity.class)
-                .useDefaultResponseMessages(false)
-                .forCodeGeneration(true)
-                .pathMapping("/")// base，最终调用接口后会和paths拼接在一起
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .groupName("test")
+//                .genericModelSubstitutes(DeferredResult.class)
+//                .useDefaultResponseMessages(false)
+//                .forCodeGeneration(true)
+//                .pathMapping("/")// base，最终调用接口后会和paths拼接在一起
+//                .select()
+//                .paths(or(regex("/api/.*")))//过滤的接口
+////                .paths(or(regex("/.*")))//过滤的接口
+//                .build()
+//                .apiInfo(testApiInfo());
+        
+        return   new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(testApiInfo())
+                .genericModelSubstitutes(ResponseEntity.class)
                 .select()
-                .paths(or(regex("/api/.*")))//过滤的接口
-                .build()
-                .apiInfo(testApiInfo());
+                .paths(regex("/api/.*")) // and by paths
+                .build();
+
+        
+    	
+//    	return new Docket(DocumentationType.SWAGGER_2)
+//    	        .select()
+//    	          .apis(RequestHandlerSelectors.any())
+//    	          .paths(PathSelectors.any())
+//    	          .build()
+//    	        .pathMapping("/")
+//    	        .directModelSubstitute(LocalDate.class,
+//    	            String.class)
+//    	        .genericModelSubstitutes(ResponseEntity.class)
+//    	        .useDefaultResponseMessages(false)
+//    	        .globalResponseMessage(RequestMethod.GET,
+//    	            newArrayList(new ResponseMessageBuilder()
+//    	                .code(500)
+//    	                .message("500 message")
+//    	                .responseModel(new ModelRef("Error"))
+//    	                .build()))
+//    	        .securitySchemes(newArrayList(apiKey()))
+//    	        .enableUrlTemplating(true)
+//    	        .globalOperationParameters(
+//    	            newArrayList(new ParameterBuilder()
+//    	                .name("someGlobalParameter")
+//    	                .description("Description of someGlobalParameter")
+//    	                .modelRef(new ModelRef("string"))
+//    	                .parameterType("query")
+//    	                .required(true)
+//    	                .build()))
+//    	        .tags(new Tag("Pet Service", "All apis relating to pets")) 
+//    	        ;
+
     }
 
-    @Bean
+    private ApiKey apiKey() {
+        return new ApiKey("mykey", "api_key", "header");
+      }
+
+	@Bean
     public Docket demoApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("demo")
@@ -94,4 +157,9 @@ public class SwaggerConfig {
 
         return apiInfo;
     }
+    
+
+
+
+    
 }

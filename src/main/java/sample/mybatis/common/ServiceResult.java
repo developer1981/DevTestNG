@@ -1,6 +1,6 @@
 package sample.mybatis.common;
 
-public class Result {
+public class ServiceResult {
 	private String code;
 	private String msg;
 	public String getCode() {

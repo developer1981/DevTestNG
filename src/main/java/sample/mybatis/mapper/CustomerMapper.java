@@ -2,10 +2,13 @@ package sample.mybatis.mapper;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import sample.mybatis.common.Config;
-import sample.mybatis.common.Result;
+import sample.mybatis.common.ServiceResult;
 import sample.mybatis.domain.Customer;
 @Component
 public class CustomerMapper {
@@ -21,18 +24,16 @@ public class CustomerMapper {
     	return sqlSessionTemplate.selectOne("sample.mybatis.mapper.CustomerMapper.selectByName", name);
     }
     
-    public Result register(Customer customer){
-    	Result result = new Result();
-    	
-    	Customer savedCus = selectByName(customer.getName());
-    	if (savedCus!=null){
-    		result.setCode(Config.ERROR_CODE);
-    		result.setMsg(customer.getName() + "existed!");
-    		
-    	}else{
+    public ServiceResult register(Customer customer){
+    	ServiceResult result = new ServiceResult();
+
+    	try{
     		insertSelective(customer);
     		result.setCode(Config.SUCCESS_CODE);
-    		result.setMsg(customer.getId().toString());    		
+    		result.setMsg(customer.getId().toString());  		
+    	}catch(DuplicateKeyException duplicateKeyException){
+    		result.setCode(Config.ERROR_CODE_DB);
+    		result.setMsg("DuplicateKeyException: " + customer.getId().toString());
     	}
     	
     	return result;

@@ -38,7 +38,7 @@
       #{orderNum,jdbcType=INTEGER}, #{totalSpent,jdbcType=REAL}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{credentials,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="Customer" >
+  <insert id="insertSelective" parameterType="Customer"  useGeneratedKeys="true" keyProperty="id">
     insert into customer
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

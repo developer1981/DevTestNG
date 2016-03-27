@@ -2,12 +2,14 @@ package sample.mybatis.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.sf.json.JSONObject;
+
 import sample.mybatis.common.Config;
-import sample.mybatis.common.Result;
+import sample.mybatis.common.Response;
+import sample.mybatis.common.ServiceResult;
 import sample.mybatis.domain.Restaurant;
 import sample.mybatis.mapper.RestaurantMapper;
 
@@ -18,16 +20,21 @@ public class VendorController {
 	@Autowired
 	private RestaurantMapper restaurantMapper;
 	
-    @RequestMapping(value="/queryVendorById")
-    public Result queryVendorById(@RequestParam("id") String id) {
+    @RequestMapping(value="/queryVendorById", method = RequestMethod.GET)
+    public Response queryVendorById(@RequestParam("id") String id) {
     	
-		Result result = new Result();
+		ServiceResult result = new ServiceResult();
 		result.setCode(Config.SUCCESS_CODE);
 		
 		Restaurant  restaurant = restaurantMapper.selectByPrimaryKey(Integer.parseInt(id));
-		JSONObject json = JSONObject.fromObject(restaurant);
-		result.setMsg(json.toString());
+
+		Response resp = new Response();
 		
-        return  result;
+		resp.setMessage("OK!");
+		resp.setStatusCode(Config.SUCCESS_CODE);
+		
+		resp.setRespData(restaurant);
+		
+        return  resp;
     }
 }

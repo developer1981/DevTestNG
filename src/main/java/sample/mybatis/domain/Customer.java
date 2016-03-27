@@ -2,6 +2,8 @@ package sample.mybatis.domain;
 
 import java.util.Date;
 
+
+
 public class Customer {
     private Integer id;
 
@@ -97,6 +99,7 @@ public class Customer {
         this.createTime = createTime;
     }
 
+    
     public Date getUpdateTime() {
         return updateTime;
     }
